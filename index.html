@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة "وفاء وولاء" الرقمية والتفاعلية للوطن - ثانوية خولة بنت اليمان</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        saudi: {
+                            DEFAULT: '#005826', 
+                            dark: '#003D1A',
+                            light: '#007534',
+                            gold: '#C5A059',
+                            goldDark: '#997530',
+                            cream: '#F4F7F5',
+                            cardBg: '#FFFFFF',
+                            subBg: '#EAF0EC'
+                        }
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #EBF2EC;
+            background-image: radial-gradient(circle at 50% 10%, rgba(0, 88, 38, 0.08) 0%, rgba(197, 160, 89, 0.08) 100%);
+            color: #111827;
+            min-height: 100vh;
+        }
+        .gold-border {
+            border: 2px solid #C5A059;
+            box-shadow: 0 4px 20px rgba(197, 160, 89, 0.2);
+        }
+        .gold-glow {
+            text-shadow: 0 2px 12px rgba(197, 160, 89, 0.25);
+        }
+        .glass-card {
+            background: #FFFFFF;
+            border: 1px solid rgba(197, 160, 89, 0.35);
+            box-shadow: 0 10px 30px -5px rgba(0, 88, 38, 0.08), 0 8px 12px -6px rgba(0, 0, 0, 0.05);
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #EAF0EC;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #C5A059;
+            border-radius: 4px;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="selection:bg-saudi-gold selection:text-white">
+
+    <header class="relative overflow-hidden border-b-2 border-saudi-gold/40 bg-gradient-to-b from-white via-emerald-50/40 to-saudi-cream py-6 px-4 sm:px-6 shadow-md">
+        <div class="absolute inset-0 opacity-5 bg-[radial-gradient(#C5A059_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none"></div>
+        
+        <div class="max-w-7xl mx-auto flex flex-col items-center justify-center gap-5 relative z-10 text-center">
+            
+            <div class="flex items-center justify-center gap-3 bg-white/95 px-6 py-3 rounded-3xl border-2 border-saudi/30 shadow-lg max-w-xl w-full">
+                <i class="fa-solid fa-flag text-saudi-gold text-lg"></i> 
+                <span class="text-saudi font-black text-sm sm:text-base">المملكة العربية السعودية</span>
+            </div>
+
+            <div class="max-w-4xl px-2">
+                <div class="inline-flex items-center gap-2 bg-saudi text-white px-5 py-1.5 rounded-full text-xs font-black mb-3 shadow-sm border border-saudi-gold">
+                    <i class="fa-solid fa-flag text-saudi-gold"></i> اليوم الوطني السعودي 96 / 1448هـ
+                </div>
+                
+                <h1 class="text-base sm:text-xl font-black text-saudi tracking-wide gold-glow mb-3">
+                    لوحة "وفاء وولاء" الرقمية والتفاعلية للوطن
+                </h1>
+                
+                <p class="text-gray-900 text-xs sm:text-sm font-bold leading-relaxed mb-4 max-w-3xl mx-auto">
+                    منصة رقمية لثانوية خولة بنت اليمان لمشاركة أولياء الأمور مشاعر الفخر والاعتزاز وتقديم أسمى آيات الولاء للوطن وقيادته الرشيدة
+                </p>
+
+                <div class="inline-flex flex-col items-center justify-center bg-saudi/10 px-6 py-3 rounded-2xl border border-saudi/30 text-xs font-black text-saudi gap-1 shadow-inner">
+                    <span class="text-saudi-dark text-sm">ثانوية خولة بنت اليمان</span>
+                    <span>إعداد المعلمة: <span class="text-saudi-dark">عفاف الخزاعي</span></span>
+                    <span>مديرة المدرسة: <span class="text-saudi-dark">منال عاشور</span></span>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-2">
+        <div class="glass-card rounded-3xl p-6 sm:p-8 border-2 border-saudi-gold/40 shadow-xl bg-gradient-to-r from-white via-emerald-50/20 to-amber-50/20 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-saudi/10 rounded-full blur-2xl pointer-events-none"></div>
+            
+            <div class="text-center max-w-4xl mx-auto">
+                <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-saudi to-saudi-dark text-white text-2xl shadow-lg mb-3 border-2 border-saudi-gold floating">
+                    <i class="fa-solid fa-flag"></i>
+                </div>
+                
+                <h2 class="text-base sm:text-lg font-black text-saudi mb-2.5">
+                    راية العز وقيادة المجد والوفاء
+                </h2>
+                
+                <p class="text-gray-900 text-xs sm:text-sm leading-relaxed mb-5 font-bold">
+                    تستظل هذه اللوحة الوطنية براية التوحيد الخفاقة 
+                    <span class="font-extrabold text-saudi">لا إله إلا الله محمد رسول الله</span>، وتستلهم عزمها من مسيرة البنّاء والتطوير في عهد خادم الحرمين الشريفين الملك 
+                    <span class="font-extrabold text-saudi">سلمان بن عبد العزيز آل سعود</span>، ومهندس الرؤية ولي العهد الأمين الأمير 
+                    <span class="font-extrabold text-saudi-goldDark">محمد بن سلمان بن عبد العزيز</span> حفظهما الله ورعاهما.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 pb-16 pt-4">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Sidebar Column -->
+            <div class="lg:col-span-1 space-y-6">
+                <!-- Principal Message Box -->
+                <div class="glass-card rounded-3xl p-6 border-2 border-saudi/50 shadow-xl bg-gradient-to-br from-emerald-50/70 to-white">
+                    <div class="flex items-center justify-between mb-3 pb-3 border-b border-gray-200">
+                        <h2 class="text-sm font-black text-saudi flex items-center gap-2">
+                            <i class="fa-solid fa-crown text-saudi-goldDark"></i> كلمة مديرة المدرسة
+                        </h2>
+                        <span class="text-[11px] bg-saudi text-white px-2.5 py-0.5 rounded-full font-black">منال عاشور</span>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <p class="text-xs text-gray-700 font-semibold">
+                            اكتبِ كلمتكِ التوجيهية والوطنية كمديرة للمدرسة لتثبيتها هنا:
+                        </p>
+                        <textarea id="principalMessageInput" rows="3" placeholder="اكتبِ كلمة مديرة المدرسة هنا..."
+                                  class="w-full bg-white border-2 border-saudi/30 rounded-xl px-3 py-2 text-xs font-bold text-gray-900 focus:outline-none focus:border-saudi transition resize-none shadow-sm"></textarea>
+                        <button onclick="savePrincipalMessage()" class="w-full bg-saudi-light text-white text-xs font-black py-2 rounded-xl shadow hover:bg-saudi transition flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-floppy-disk"></i> حفظ وثبات كلمة المديرة
+                        </button>
+                    </div>
+
+                    <div id="principalDisplayBox" class="mt-4 pt-3 border-t border-saudi/20">
+                        <p id="savedPrincipalText" class="text-xs text-gray-900 font-bold leading-relaxed italic">
+                            "في انتظار إضافة كلمة مديرة المدرسة..."
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Parents Submission Form Box -->
+                <div class="glass-card rounded-3xl p-6 border-2 border-saudi-gold/40 shadow-xl">
+                    <div class="flex items-center justify-between mb-4 pb-3 border-b border-gray-200">
+                        <h2 class="text-sm font-black text-saudi flex items-center gap-2">
+                            <i class="fa-solid fa-pen-nib text-saudi-goldDark"></i> شارك بعبارة وفاء
+                        </h2>
+                        <span class="text-xs bg-saudi text-white px-3 py-1 rounded-full font-black shadow-sm">أولياء الأمور</span>
+                    </div>
+
+                    <!-- Preset Suggestions -->
+                    <div class="mb-4">
+                        <label class="block text-xs font-black text-gray-900 mb-2">نماذج جاهزة للإلهام (انقر للاختيار):</label>
+                        <div class="space-y-2 max-h-48 overflow-y-auto pr-1">
+                            <div onclick="selectPreset('إلى قيادتنا الحكيمة.. دمتِ يا بلادي شامخة بالعز، ودامت رايتنا خفاقة تعانق السماء بفخر واعتزاز.')" 
+                                 class="p-2.5 rounded-xl bg-gray-50 border border-gray-300 hover:border-saudi hover:bg-saudi/5 text-xs cursor-pointer transition text-gray-900 font-bold">
+                                <span class="font-black text-saudi block mb-0.5">حب القيادة:</span>
+                                إلى قيادتنا الحكيمة.. دمتِ يا بلادي شامخة بالعز...
+                            </div>
+                            <div onclick="selectPreset('وطني الحبيب، حيث للأرض طعم آخر وللانتماء معنى أعمق. نجدد لك اليوم العهد والوفاء والإخلاص.')" 
+                                 class="p-2.5 rounded-xl bg-gray-50 border border-gray-300 hover:border-saudi hover:bg-saudi/5 text-xs cursor-pointer transition text-gray-900 font-bold">
+                                <span class="font-black text-saudi block mb-0.5">الفخر والانتماء:</span>
+                                وطني الحبيب، حيث للأرض طعم آخر وللانتماء...
+                            </div>
+                            <div onclick="selectPreset('من مجد الأجداد إلى رؤية الأحفاد، نحلم ونحقّق بكل أمانة ليبقى الوطن دائماً في قمة المجد.')" 
+                                 class="p-2.5 rounded-xl bg-gray-50 border border-gray-300 hover:border-saudi hover:bg-saudi/5 text-xs cursor-pointer transition text-gray-900 font-bold">
+                                <span class="font-black text-saudi block mb-0.5">تطلعات المستقبل:</span>
+                                من مجد الأجداد إلى رؤية الأحفاد، نحلم ونحقّق...
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submission Form -->
+                    <form id="loyaltyForm" onsubmit="handleSubmit(event)" class="space-y-3.5">
+                        <div>
+                            <label class="block text-xs font-black text-gray-900 mb-1">اسم ولي الأمر / العائلة:</label>
+                            <input type="text" id="parentName" required placeholder="مثال: أسرة آل تميم / أبو فهد"
+                                   class="w-full bg-gray-50 border-2 border-gray-300 rounded-xl px-4 py-2.5 text-xs font-bold text-gray-900 placeholder-gray-400 focus:outline-none focus:border-saudi focus:bg-white transition shadow-sm">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-black text-gray-900 mb-1">عبارة الولاء والوفاء:</label>
+                            <textarea id="parentMessage" required rows="3" placeholder="اكتب مشاعرك الوطنية أو اختر من النماذج أعلاه..."
+                                      class="w-full bg-gray-50 border-2 border-gray-300 rounded-xl px-4 py-2.5 text-xs font-bold text-gray-900 placeholder-gray-400 focus:outline-none focus:border-saudi focus:bg-white transition resize-none shadow-sm"></textarea>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-black text-gray-900 mb-1">اختر طابع البطاقة:</label>
+                            <select id="cardTheme" class="w-full bg-gray-50 border-2 border-gray-300 rounded-xl px-4 py-2.5 text-xs font-bold text-gray-900 focus:outline-none focus:border-saudi focus:bg-white transition shadow-sm">
+                                <option value="bg-gradient-to-br from-emerald-50 to-green-100 border-saudi text-saudi-dark">🟢 أخضر سعودي راقي وفاتح</option>
+                                <option value="bg-gradient-to-br from-amber-50 to-yellow-100 border-amber-500 text-amber-900">⚜️ تراثي ذهبي معتق</option>
+                                <option value="bg-gradient-to-br from-cyan-50 to-blue-100 border-cyan-500 text-cyan-900">💎 طموح رؤية 2030 المعاصر</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="w-full bg-gradient-to-r from-saudi to-saudi-dark text-white font-black py-3 px-4 rounded-xl shadow-lg hover:opacity-95 transition transform active:scale-95 flex items-center justify-center gap-2 text-xs border border-saudi-gold">
+                            <i class="fa-solid fa-paper-plane"></i> نشر وثبات البطاقة على اللوحة الوطنية
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Display Wall Column -->
+            <div class="lg:col-span-2">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-base sm:text-lg font-black text-saudi flex items-center gap-2">
+                        <i class="fa-solid fa-comments text-saudi-goldDark"></i> لوحة المشاعر الوطنية الثابتة والتفاعلية
+                    </h2>
+                    <div class="text-xs text-saudi bg-saudi/15 px-4 py-1.5 rounded-full font-black border border-saudi/30 shadow-sm">
+                        إجمالي البطاقات المحفوظة: <span id="cardCount" class="font-black text-saudi-dark">0</span>
+                    </div>
+                </div>
+
+                <!-- Cards Grid -->
+                <div id="cardsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Cards will be dynamically injected here -->
+                </div>
+
+                <!-- Empty State Message -->
+                <div id="emptyState" class="glass-card rounded-3xl p-12 text-center border-2 border-dashed border-gray-300">
+                    <div class="w-16 h-16 bg-saudi/10 text-saudi rounded-full flex items-center justify-center mx-auto mb-4 text-2xl border border-saudi/30 shadow-sm">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </div>
+                    <h3 class="text-base font-black text-gray-900 mb-1">لا توجد بطاقات منشورة بعد</h3>
+                    <p class="text-xs text-gray-600 max-w-sm mx-auto font-semibold">كن أول من يشارك بعبارة وفاء وولاء للوطن عبر نموذج الإرسال لتبقى بطاقتك محفوظة وثابتة دائماً.</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="border-t-2 border-gray-200 bg-white py-6 text-center text-xs text-gray-700 shadow-inner">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 font-bold">
+            <p>جميع الحقوق محفوظة - ثانوية خولة بنت اليمان | إعداد: عفاف الخزاعي - إدارة: منال عاشور</p>
+            <div class="flex items-center gap-4 text-saudi">
+                <span><i class="fa-solid fa-shield-halved ml-1"></i> اليوم الوطني 96</span>
+                <span><i class="fa-solid fa-star ml-1 text-saudi-gold"></i> رؤية 2030</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Custom Modal -->
+    <div id="customModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl p-6 max-w-sm w-full border-2 border-saudi/40 text-center shadow-2xl">
+            <div class="w-14 h-14 bg-saudi/15 text-saudi rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-saudi text-2xl">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h3 id="modalTitle" class="text-base font-black text-saudi mb-2">تم الحفظ بنجاح!</h3>
+            <p id="modalDesc" class="text-xs text-gray-700 mb-6 font-semibold">تم حفظ بطاقتك وتثبيتها بشكل دائم على اللوحة التفاعلية.</p>
+            <button onclick="closeModal()" class="w-full bg-saudi text-white font-black py-2.5 rounded-xl text-xs hover:bg-saudi-dark transition shadow-md">
+                حسناً
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let cards = [];
+
+        window.addEventListener('DOMContentLoaded', () => {
+            // Load saved permanent cards from localStorage
+            const savedCards = localStorage.getItem('saudi_loyalty_cards_khawla_permanent');
+            if (savedCards) {
+                try {
+                    cards = JSON.parse(savedCards);
+                } catch(e) {
+                    cards = [];
+                }
+            } else {
+                // Default initial welcome greeting if empty
+                cards = [
+                    {
+                        name: "أسرة ثانوية خولة بنت اليمان",
+                        message: "نرفع أسمى آيات التهاني والتبريكات لمقام خادم الحرمين الشريفين وولي عهده الأمين بمناسبة اليوم الوطني السعودي 96.",
+                        theme: "bg-gradient-to-br from-emerald-50 to-green-100 border-saudi text-saudi-dark",
+                        date: "اليوم الوطني 96"
+                    }
+                ];
+                localStorage.setItem('saudi_loyalty_cards_khawla_permanent', JSON.stringify(cards));
+            }
+
+            // Load saved principal message from localStorage
+            const savedPrincipalMsg = localStorage.getItem('saudi_principal_msg_khawla_permanent');
+            if (savedPrincipalMsg) {
+                document.getElementById('principalMessageInput').value = savedPrincipalMsg;
+                document.getElementById('savedPrincipalText').textContent = `"${savedPrincipalMsg}"`;
+            }
+
+            renderCards();
+        });
+
+        function savePrincipalMessage() {
+            const txt = document.getElementById('principalMessageInput').value.trim();
+            if (txt) {
+                localStorage.setItem('saudi_principal_msg_khawla_permanent', txt);
+                document.getElementById('savedPrincipalText').textContent = `"${txt}"`;
+                showModal("تم حفظ وثبات كلمة المديرة!", "تم حفظ كلمة مديرة المدرسة منال عاشور وثباتها بشكل دائم بنجاح تام.");
+            } else {
+                showModal("تنبيه", "يرجى كتابة كلمة مديرة المدرسة أولاً قبل الحفظ.");
+            }
+        }
+
+        function selectPreset(text) {
+            document.getElementById('parentMessage').value = text;
+        }
+
+        function handleSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('parentName').value.trim();
+            const message = document.getElementById('parentMessage').value.trim();
+            const theme = document.getElementById('cardTheme').value;
+
+            if(!name || !message) return;
+
+            const newCard = {
+                name: name,
+                message: message,
+                theme: theme,
+                date: "اليوم الوطني 96"
+            };
+
+            cards.unshift(newCard);
+            
+            // Save permanently in localStorage so it stays there every time someone writes
+            localStorage.setItem('saudi_loyalty_cards_khawla_permanent', JSON.stringify(cards));
+
+            renderCards();
+            
+            document.getElementById('loyaltyForm').reset();
+            showModal("تم تثبيت بطاقتك بنجاح!", "شكراً لمشاركتك الوطنية. لقد تم حفظ بطاقتك وتثبيتها بشكل دائم على اللوحة.");
+        }
+
+        function renderCards() {
+            const grid = document.getElementById('cardsGrid');
+            const countEl = document.getElementById('cardCount');
+            const emptyState = document.getElementById('emptyState');
+            
+            countEl.textContent = cards.length;
+
+            if (cards.length === 0) {
+                emptyState.classList.remove('hidden');
+                grid.innerHTML = '';
+                return;
+            } else {
+                emptyState.classList.add('hidden');
+            }
+
+            grid.innerHTML = '';
+            cards.forEach((card, index) => {
+                const cardDiv = document.createElement('div');
+                cardDiv.className = `${card.theme} rounded-3xl p-5 border-2 shadow-lg flex flex-col justify-between relative overflow-hidden transition transform hover:-translate-y-1`;
+                
+                cardDiv.innerHTML = `
+                    <div class="absolute top-3 left-3 text-current opacity-10 text-3xl font-black pointer-events-none">
+                        <i class="fa-solid fa-quote-left"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs bg-white/95 px-3 py-1 rounded-full font-black border border-black/10 shadow-sm text-gray-900">
+                                <i class="fa-solid fa-heart text-red-600 ml-1"></i> ${card.name}
+                            </span>
+                            <span class="text-[10px] font-bold opacity-80">${card.date}</span>
+                        </div>
+                        <p class="text-xs sm:text-sm font-bold leading-relaxed mb-4 text-gray-900">
+                            "${card.message}"
+                        </p>
+                    </div>
+                    <div class="flex items-center justify-between pt-3 border-t border-black/15 text-[11px] font-bold">
+                        <span class="flex items-center gap-1 text-saudi"><i class="fa-solid fa-flag text-saudi"></i> يوم الوطن 96</span>
+                        <button onclick="likeCard(${index})" class="hover:opacity-85 transition flex items-center gap-1 bg-white/90 px-3 py-1 rounded-lg border border-black/10 shadow-sm text-xs text-red-600 font-bold">
+                            <i class="fa-solid fa-heart text-red-600"></i> تفاعل
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(cardDiv);
+            });
+        }
+
+        function likeCard(index) {
+            showModal("شكراً لتفاعلك!", "تم تسجيل إعجابك واعتزازك بهذه العبارة الوطنية بكل فخر.");
+        }
+
+        function showModal(title, desc) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalDesc').textContent = desc;
+            document.getElementById('customModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('customModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
