@@ -276,141 +276,146 @@
         </div>
     </div>
 
-    <script>
-        let cards = [];
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
+        import { getFirestore, collection, doc, setDoc, onSnapshot, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
 
-        window.addEventListener('DOMContentLoaded', () => {
-            // Load saved permanent cards from localStorage
-            const savedCards = localStorage.getItem('saudi_loyalty_cards_khawla_permanent');
-            if (savedCards) {
-                try {
-                    cards = JSON.parse(savedCards);
-                } catch(e) {
-                    cards = [];
-                }
-            } else {
-                // Default initial welcome greeting if empty
-                cards = [
-                    {
-                        name: "أسرة ثانوية خولة بنت اليمان",
-                        message: "نرفع أسمى آيات التهاني والتبريكات لمقام خادم الحرمين الشريفين وولي عهده الأمين بمناسبة اليوم الوطني السعودي 96.",
-                        theme: "bg-gradient-to-br from-emerald-50 to-green-100 border-saudi text-saudi-dark",
-                        date: "اليوم الوطني 96"
-                    }
-                ];
-                localStorage.setItem('saudi_loyalty_cards_khawla_permanent', JSON.stringify(cards));
-            }
+        // This is the separate national-day-cards project, NOT Bared-Alwafaa.
+        const firebaseConfig = {
+            apiKey: "AIzaSyDSgouac8zkTLGBseM9Kp8gSE2fIlIxNGo",
+            authDomain: "national-day-cards.firebaseapp.com",
+            projectId: "national-day-cards",
+            storageBucket: "national-day-cards.firebasestorage.app",
+            messagingSenderId: "146283131057",
+            appId: "1:146283131057:web:6c00e3033f851f6debb290"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const cardsCollection = collection(db, 'cards');
+        const themes = [
+            'bg-gradient-to-br from-emerald-50 to-green-100 border-saudi text-saudi-dark',
+            'bg-gradient-to-br from-amber-50 to-yellow-100 border-amber-500 text-amber-900',
+            'bg-gradient-to-br from-cyan-50 to-blue-100 border-cyan-500 text-cyan-900'
+        ];
+        // Theme is encoded in the document ID: preserves the existing published
+        // security rules that permit only name, message, createdAt fields.
+        const greetingCard = {
+            name: 'أسرة ثانوية خولة بنت اليمان',
+            message: 'نرفع أسمى آيات التهاني والتبريكات لمقام خادم الحرمين الشريفين وولي عهده الأمين بمناسبة اليوم الوطني السعودي 96.',
+            theme: themes[0], date: 'اليوم الوطني 96'
+        };
+        let cards = [greetingCard];
+        const submitButton = document.querySelector('#loyaltyForm button[type="submit"]');
+        const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, c => ({
+            '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
+        }[c]));
 
-            // Load saved principal message from localStorage
-            const savedPrincipalMsg = localStorage.getItem('saudi_principal_msg_khawla_permanent');
-            if (savedPrincipalMsg) {
-                document.getElementById('principalMessageInput').value = savedPrincipalMsg;
-                document.getElementById('savedPrincipalText').textContent = `"${savedPrincipalMsg}"`;
-            }
-
-            renderCards();
-        });
-
-        function savePrincipalMessage() {
-            const txt = document.getElementById('principalMessageInput').value.trim();
-            if (txt) {
-                localStorage.setItem('saudi_principal_msg_khawla_permanent', txt);
-                document.getElementById('savedPrincipalText').textContent = `"${txt}"`;
-                showModal("تم حفظ وثبات كلمة المديرة!", "تم حفظ كلمة مديرة المدرسة منال عاشور وثباتها بشكل دائم بنجاح تام.");
-            } else {
-                showModal("تنبيه", "يرجى كتابة كلمة مديرة المدرسة أولاً قبل الحفظ.");
-            }
+        // Keep the principal's existing locally saved draft intact; it is NOT
+        // a shared/admin-protected message until authenticated admin publishing is built.
+        const savedPrincipalMsg = localStorage.getItem('saudi_principal_msg_khawla_permanent');
+        if (savedPrincipalMsg) {
+            document.getElementById('principalMessageInput').value = savedPrincipalMsg;
+            document.getElementById('savedPrincipalText').textContent = `"${savedPrincipalMsg}"`;
         }
-
-        function selectPreset(text) {
-            document.getElementById('parentMessage').value = text;
-        }
-
-        function handleSubmit(e) {
-            e.preventDefault();
-            const name = document.getElementById('parentName').value.trim();
-            const message = document.getElementById('parentMessage').value.trim();
-            const theme = document.getElementById('cardTheme').value;
-
-            if(!name || !message) return;
-
-            const newCard = {
-                name: name,
-                message: message,
-                theme: theme,
-                date: "اليوم الوطني 96"
-            };
-
-            cards.unshift(newCard);
-            
-            // Save permanently in localStorage so it stays there every time someone writes
-            localStorage.setItem('saudi_loyalty_cards_khawla_permanent', JSON.stringify(cards));
-
-            renderCards();
-            
-            document.getElementById('loyaltyForm').reset();
-            showModal("تم تثبيت بطاقتك بنجاح!", "شكراً لمشاركتك الوطنية. لقد تم حفظ بطاقتك وتثبيتها بشكل دائم على اللوحة.");
-        }
+        const principalNotice = document.createElement('p');
+        principalNotice.className = 'text-[11px] text-amber-900 font-bold mt-2';
+        principalNotice.textContent = 'تنبيه: كلمة المديرة هنا محفوظة على هذا الجهاز فقط، ولا تُنشر للزوار. يلزم إعداد صلاحية إدارة خاصة لنشرها للجميع.';
+        document.getElementById('principalDisplayBox').appendChild(principalNotice);
 
         function renderCards() {
             const grid = document.getElementById('cardsGrid');
-            const countEl = document.getElementById('cardCount');
-            const emptyState = document.getElementById('emptyState');
-            
-            countEl.textContent = cards.length;
-
-            if (cards.length === 0) {
-                emptyState.classList.remove('hidden');
-                grid.innerHTML = '';
-                return;
-            } else {
-                emptyState.classList.add('hidden');
-            }
-
+            document.getElementById('cardCount').textContent = cards.length;
+            document.getElementById('emptyState').classList.toggle('hidden', cards.length > 0);
             grid.innerHTML = '';
-            cards.forEach((card, index) => {
+            cards.forEach(card => {
                 const cardDiv = document.createElement('div');
-                cardDiv.className = `${card.theme} rounded-3xl p-5 border-2 shadow-lg flex flex-col justify-between relative overflow-hidden transition transform hover:-translate-y-1`;
-                
+                cardDiv.className = `${themes.includes(card.theme) ? card.theme : themes[0]} rounded-3xl p-5 border-2 shadow-lg flex flex-col justify-between relative overflow-hidden transition transform hover:-translate-y-1`;
                 cardDiv.innerHTML = `
-                    <div class="absolute top-3 left-3 text-current opacity-10 text-3xl font-black pointer-events-none">
-                        <i class="fa-solid fa-quote-left"></i>
-                    </div>
+                    <div class="absolute top-3 left-3 text-current opacity-10 text-3xl font-black pointer-events-none"><i class="fa-solid fa-quote-left"></i></div>
                     <div>
                         <div class="flex items-center justify-between mb-3">
-                            <span class="text-xs bg-white/95 px-3 py-1 rounded-full font-black border border-black/10 shadow-sm text-gray-900">
-                                <i class="fa-solid fa-heart text-red-600 ml-1"></i> ${card.name}
-                            </span>
-                            <span class="text-[10px] font-bold opacity-80">${card.date}</span>
+                            <span class="text-xs bg-white/95 px-3 py-1 rounded-full font-black border border-black/10 shadow-sm text-gray-900"><i class="fa-solid fa-heart text-red-600 ml-1"></i> ${escapeHtml(card.name)}</span>
+                            <span class="text-[10px] font-bold opacity-80">${escapeHtml(card.date)}</span>
                         </div>
-                        <p class="text-xs sm:text-sm font-bold leading-relaxed mb-4 text-gray-900">
-                            "${card.message}"
-                        </p>
+                        <p class="text-xs sm:text-sm font-bold leading-relaxed mb-4 text-gray-900 whitespace-pre-wrap">"${escapeHtml(card.message)}"</p>
                     </div>
                     <div class="flex items-center justify-between pt-3 border-t border-black/15 text-[11px] font-bold">
                         <span class="flex items-center gap-1 text-saudi"><i class="fa-solid fa-flag text-saudi"></i> يوم الوطن 96</span>
-                        <button onclick="likeCard(${index})" class="hover:opacity-85 transition flex items-center gap-1 bg-white/90 px-3 py-1 rounded-lg border border-black/10 shadow-sm text-xs text-red-600 font-bold">
-                            <i class="fa-solid fa-heart text-red-600"></i> تفاعل
-                        </button>
-                    </div>
-                `;
+                        <button type="button" class="like-btn hover:opacity-85 transition flex items-center gap-1 bg-white/90 px-3 py-1 rounded-lg border border-black/10 shadow-sm text-xs text-red-600 font-bold"><i class="fa-solid fa-heart text-red-600"></i> تفاعل</button>
+                    </div>`;
+                cardDiv.querySelector('.like-btn').addEventListener('click', () => {
+                    showModal('شكراً لتفاعلك!', 'سعدنا بتفاعلك مع هذه العبارة الوطنية.');
+                });
                 grid.appendChild(cardDiv);
             });
         }
+        renderCards();
 
-        function likeCard(index) {
-            showModal("شكراً لتفاعلك!", "تم تسجيل إعجابك واعتزازك بهذه العبارة الوطنية بكل فخر.");
-        }
+        // A live Firestore subscription makes additions visible across all devices.
+        onSnapshot(query(cardsCollection, orderBy('createdAt', 'desc')), snapshot => {
+            const shared = snapshot.docs.map(item => {
+                const data = item.data();
+                const themeNo = /^t([012])_/.exec(item.id);
+                return {
+                    name: data.name,
+                    message: data.message,
+                    theme: themes[themeNo ? Number(themeNo[1]) : 0],
+                    date: 'اليوم الوطني 96'
+                };
+            });
+            cards = [...shared, greetingCard];
+            renderCards();
+        }, error => {
+            console.error('Firestore read failed:', error);
+            showModal('تعذر تحميل البطاقات', 'تأكدي من الاتصال بالإنترنت ومن صلاحيات قاعدة البيانات، ثم أعيدي تحميل الصفحة.');
+        });
 
+        window.selectPreset = function (text) {
+            document.getElementById('parentMessage').value = text;
+        };
+        window.savePrincipalMessage = function () {
+            const txt = document.getElementById('principalMessageInput').value.trim();
+            if (!txt) return showModal('تنبيه', 'يرجى كتابة كلمة مديرة المدرسة أولاً.');
+            localStorage.setItem('saudi_principal_msg_khawla_permanent', txt);
+            document.getElementById('savedPrincipalText').textContent = `"${txt}"`;
+            showModal('تم حفظ مسودة كلمة المديرة', 'حُفظت على هذا الجهاز فقط؛ لن يراها الزوار حتى نضيف نشرًا آمنًا للإدارة.');
+        };
+        window.handleSubmit = async function (event) {
+            event.preventDefault();
+            const name = document.getElementById('parentName').value.trim();
+            const message = document.getElementById('parentMessage').value.trim();
+            const themeIndex = Math.max(0, themes.indexOf(document.getElementById('cardTheme').value));
+            if (!name || !message) return;
+            if (name.length > 60 || message.length > 1000) {
+                return showModal('العبارة طويلة', 'الاسم بحد أقصى 60 حرفًا، والعبارة بحد أقصى 1000 حرف.');
+            }
+            submitButton.disabled = true;
+            submitButton.classList.add('opacity-60');
+            try {
+                // IDs have a theme prefix, but only the three fields allowed by
+                // the EXISTING published rules are written to Firestore.
+                const randomId = doc(cardsCollection).id;
+                await setDoc(doc(db, 'cards', `t${themeIndex}_${randomId}`), {
+                    name, message, createdAt: serverTimestamp()
+                });
+                document.getElementById('loyaltyForm').reset();
+                showModal('تم نشر بطاقتك بنجاح!', 'حُفظت في قاعدة البيانات المشتركة، وستظهر لجميع الزوار من أي جهاز.');
+            } catch (error) {
+                console.error('Firestore write failed:', error);
+                showModal('لم يتم حفظ البطاقة', 'تعذر الإرسال الآن؛ لم نفقد النص الذي كتبته. تحققي من الإنترنت وقواعد Firestore، ثم حاولي مجددًا.');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.classList.remove('opacity-60');
+            }
+        };
         function showModal(title, desc) {
             document.getElementById('modalTitle').textContent = title;
             document.getElementById('modalDesc').textContent = desc;
             document.getElementById('customModal').classList.remove('hidden');
         }
-
-        function closeModal() {
+        window.closeModal = function () {
             document.getElementById('customModal').classList.add('hidden');
-        }
+        };
     </script>
 </body>
 </html>
